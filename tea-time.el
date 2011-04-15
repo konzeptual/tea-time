@@ -92,7 +92,7 @@ Store current timer in a global variable."
   (interactive)
   (run-at-time sec nil (lambda (seconds)
 			 (tea-time-play-sound)
-			 (show-notification (format "Time is up! %d minutes" (/ seconds 60)))
+			 (tea-time-show-notification (format "Time is up! %d minutes" (/ seconds 60)))
 			 ) sec))
 
 (defun tea-time-play-sound ()
@@ -147,18 +147,11 @@ Cancel prevoius timer, started by this function"
 	)))
   )
 
-(defun show-notification (notification)
+(defun tea-time-show-notification (notification)
   "Show notification. Use mumbles."
-  (if (program-exists "mumbles-send")
-      (start-process "tea-time-mumble-notification" nil "mumbles-send" notification)
     (message notification)
-    ))
-
-(defun program-exists (program-name)
-  "Checks whenever we can locate program and launch it."
-  (if (eq system-type 'gnu/linux)
-      (= 0 (call-process "which" nil nil nil program-name))
-    ))
+    (run-hooks 'tea-time-notification-hook)
+    )
 
 (provide 'tea-time)
 ;;; tea-time.el ends here
