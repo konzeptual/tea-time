@@ -24,7 +24,7 @@
 ;; inteval is elapsed Emacs will notify you with sound and notification.
 ;; It could be useful if you like make a tea or if you would like to
 ;; be more productive by setting time limit for a task.
-;; 
+;;
 ;; If available, notification would be done with great tool
 ;; mumbles ( http://www.mumbles-project.org )
 ;; If not, then simply use standard emacs message.
@@ -53,7 +53,7 @@
 ;; 2a. Enter period in minutes if you want to start timer
 ;; 2b. Press Enter without giving any number - if you would like to know
 ;; how much time is remaining before the timer expires
-;; 
+;;
 ;; Use (tea-timer-cancel) to cancel currently running timer.
 ;;
 ;; Suggested binding:
@@ -106,6 +106,7 @@ Store current timer in a global variable."
 
 (defun tea-show-remaining-time ()
   "Show how much time is left. If timer is not started - say it."
+  (interactive)
   (if (not (tea-timer-is-active))
       (message "Timer is not yet started.")
     (let* (
