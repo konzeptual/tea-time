@@ -39,6 +39,12 @@
 ;;
 ;; (require 'tea-time)
 ;; (setq tea-time-sound "path-to-sound-file")
+;;
+;; If you're running on Mac OS X you'll need to add this
+;; (setq tea-time-sound-command "afplay %s")
+;;
+;; You can customize the sound command variable to any player you want
+;; where %s will be the sound file configured at tea-time-sound setting
 
 
 ;;; Usage:
@@ -70,6 +76,16 @@ If you don't have alsa, it is better to be .wav file"
   :type 'string
   )
 
+(defcustom tea-time-sound-command nil
+  "Command to run to play sounds."
+  :group 'tea-time
+  :type 'string
+)
+
+(defvar tea-time-notification-hook nil
+  "Hook run when tea is ready"
+  )
+
 (defun tea-timer (sec)
   "Ding and show notification when tea is ready.
 Store current timer in a global variable."
@@ -80,10 +96,10 @@ Store current timer in a global variable."
 			 ) sec))
 
 (defun tea-time-play-sound ()
-  "Play sound"  
-  (if (not (eq nil tea-time-sound))
-      (if (program-exists "aplay")
-	  (start-process "tea-time-play-notification" nil "aplay" tea-time-sound)
+  "Play sound"
+  (if (boundp 'tea-time-sound)
+      (if (boundp 'tea-time-sound-command)
+          (start-process-shell-command "tea-ready" nil (format tea-time-sound-command tea-time-sound))
 	(play-sound-file tea-time-sound))
     (progn (beep t) (beep t)))
   )
