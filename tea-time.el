@@ -3,6 +3,8 @@
 ;; Author: konsty <antipin.konstantin@googlemail.com>
 ;; Keywords: timer tea-time
 
+;; Copyright (C) 2011 Gabriel Saldana
+
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
