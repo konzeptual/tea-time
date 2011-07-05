@@ -3,6 +3,8 @@
 ;; Author: konsty <antipin.konstantin@googlemail.com>
 ;; Keywords: timer tea-time
 
+;; Copyright (C) 2011 Gabriel Saldana <gsaldana@gmail.com>
+
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
@@ -24,7 +26,7 @@
 ;; inteval is elapsed Emacs will notify you with sound and notification.
 ;; It could be useful if you like make a tea or if you would like to
 ;; be more productive by setting time limit for a task.
-;; 
+;;
 ;; If available, notification would be done with great tool
 ;; mumbles ( http://www.mumbles-project.org )
 ;; If not, then simply use standard emacs message.
@@ -39,6 +41,12 @@
 ;;
 ;; (require 'tea-time)
 ;; (setq tea-time-sound "path-to-sound-file")
+;;
+;; If you're running on Mac OS X you'll need to add this
+;; (setq tea-time-sound-command "afplay %s")
+;;
+;; You can customize the sound command variable to any player you want
+;; where %s will be the sound file configured at tea-time-sound setting
 
 
 ;;; Usage:
@@ -47,7 +55,7 @@
 ;; 2a. Enter period in minutes if you want to start timer
 ;; 2b. Press Enter without giving any number - if you would like to know
 ;; how much time is remaining before the timer expires
-;; 
+;;
 ;; Use (tea-timer-cancel) to cancel currently running timer.
 ;;
 ;; Suggested binding:
@@ -70,26 +78,37 @@ If you don't have alsa, it is better to be .wav file"
   :type 'string
   )
 
+(defcustom tea-time-sound-command nil
+  "Command to run to play sounds."
+  :group 'tea-time
+  :type 'string
+)
+
+(defvar tea-time-notification-hook nil
+  "Hook run when tea is ready"
+  )
+
 (defun tea-timer (sec)
   "Ding and show notification when tea is ready.
 Store current timer in a global variable."
   (interactive)
   (run-at-time sec nil (lambda (seconds)
 			 (tea-time-play-sound)
-			 (show-notification (format "Time is up! %d minutes" (/ seconds 60)))
+			 (tea-time-show-notification (format "Time is up! %d minutes" (/ seconds 60)))
 			 ) sec))
 
 (defun tea-time-play-sound ()
-  "Play sound"  
-  (if (not (eq nil tea-time-sound))
-      (if (program-exists "aplay")
-	  (start-process "tea-time-play-notification" nil "aplay" tea-time-sound)
+  "Play sound"
+  (if (boundp 'tea-time-sound)
+      (if (boundp 'tea-time-sound-command)
+          (start-process-shell-command "tea-ready" nil (format tea-time-sound-command tea-time-sound))
 	(play-sound-file tea-time-sound))
     (progn (beep t) (beep t)))
   )
 
 (defun tea-show-remaining-time ()
   "Show how much time is left. If timer is not started - say it."
+  (interactive)
   (if (not (tea-timer-is-active))
       (message "Timer is not yet started.")
     (let* (
@@ -131,18 +150,11 @@ Cancel prevoius timer, started by this function"
 	)))
   )
 
-(defun show-notification (notification)
+(defun tea-time-show-notification (notification)
   "Show notification. Use mumbles."
-  (if (program-exists "mumbles-send")
-      (start-process "tea-time-mumble-notification" nil "mumbles-send" notification)
     (message notification)
-    ))
-
-(defun program-exists (program-name)
-  "Checks whenever we can locate program and launch it."
-  (if (eq system-type 'gnu/linux)
-      (= 0 (call-process "which" nil nil nil program-name))
-    ))
+    (run-hooks 'tea-time-notification-hook)
+    )
 
 (provide 'tea-time)
 ;;; tea-time.el ends here
