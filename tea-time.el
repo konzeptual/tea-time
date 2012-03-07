@@ -1,9 +1,11 @@
-;;; tea-time.el --- Simple timer package.
+;;; tea-time.el --- Simple timer package, useful to make perfect tea.
 
 ;; Author: konsty <antipin.konstantin@googlemail.com>
+;; Maintainer: Gabriel Saldana <gsaldana@gmail.com>
+;; Version: 1.0
 ;; Keywords: timer tea-time
 
-;; Copyright (C) 2011 Gabriel Saldana <gsaldana@gmail.com>
+;; Copyright (C) 2011-2012 Gabriel Saldana <gsaldana@gmail.com>
 
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -93,15 +95,15 @@ If you don't have alsa, it is better to be .wav file"
 Store current timer in a global variable."
   (interactive)
   (run-at-time sec nil (lambda (seconds)
-			 (tea-time-play-sound)
 			 (tea-time-show-notification (format "Time is up! %d minutes" (/ seconds 60)))
+			 (tea-time-play-sound)
 			 ) sec))
 
 (defun tea-time-play-sound ()
   "Play sound"
-  (if (boundp 'tea-time-sound)
-      (if (boundp 'tea-time-sound-command)
-          (start-process-shell-command "tea-ready" nil (format tea-time-sound-command tea-time-sound))
+  (if tea-time-sound
+      (if tea-time-sound-command
+	  (start-process-shell-command "tea-ready" nil (format tea-time-sound-command tea-time-sound))
 	(play-sound-file tea-time-sound))
     (progn (beep t) (beep t)))
   )
@@ -158,4 +160,3 @@ Cancel prevoius timer, started by this function"
 
 (provide 'tea-time)
 ;;; tea-time.el ends here
-
