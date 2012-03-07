@@ -95,8 +95,8 @@ If you don't have alsa, it is better to be .wav file"
 Store current timer in a global variable."
   (interactive)
   (run-at-time sec nil (lambda (seconds)
-			 (tea-time-play-sound)
 			 (tea-time-show-notification (format "Time is up! %d minutes" (/ seconds 60)))
+			 (tea-time-play-sound)
 			 ) sec))
 
 (defun tea-time-play-sound ()
