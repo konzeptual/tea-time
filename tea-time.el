@@ -101,9 +101,9 @@ Store current timer in a global variable."
 
 (defun tea-time-play-sound ()
   "Play sound"
-  (if (boundp 'tea-time-sound)
-      (if (boundp 'tea-time-sound-command)
-          (start-process-shell-command "tea-ready" nil (format tea-time-sound-command tea-time-sound))
+  (if tea-time-sound
+      (if tea-time-sound-command
+	  (start-process-shell-command "tea-ready" nil (format tea-time-sound-command tea-time-sound))
 	(play-sound-file tea-time-sound))
     (progn (beep t) (beep t)))
   )
@@ -160,4 +160,3 @@ Cancel prevoius timer, started by this function"
 
 (provide 'tea-time)
 ;;; tea-time.el ends here
-
