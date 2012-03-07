@@ -1,9 +1,11 @@
-;;; tea-time.el --- Simple timer package.
+;;; tea-time.el --- Simple timer package, useful to make perfect tea.
 
 ;; Author: konsty <antipin.konstantin@googlemail.com>
+;; Maintainer: Gabriel Saldana <gsaldana@gmail.com>
+;; Version: 1.0
 ;; Keywords: timer tea-time
 
-;; Copyright (C) 2011 Gabriel Saldana <gsaldana@gmail.com>
+;; Copyright (C) 2011-2012 Gabriel Saldana <gsaldana@gmail.com>
 
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
