@@ -29,7 +29,12 @@ If not, then simply use standard emacs message.
    <code>(require 'tea-time)</code>
 
 4. Customize variable <code>tea-time-sound</code> via <code>M-x customize</code>
-or simply  put <code>(setq tea-time-sound "path-to-sound-file")</code> in .emacs
+or simply  put <code>(setq tea-time-sound "path-to-sound-file")</code> in .emacs.
+
+If you're running on Mac OS X you'll need to add the following:
+   <code>(setq tea-time-sound-command "afplay %s")</code>
+
+You can customize the sound command variable to any player you want where %s will be the sound file configured at tea-time-sound setting
 
 = Usage: =
 
