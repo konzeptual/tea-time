@@ -143,9 +143,9 @@ Cancel prevoius timer, started by this function"
   (interactive "sHow long (min)? ")
   (if (not (string-match "\\`\\([0-9]+\\)\\'" timeval))
       (tea-show-remaining-time)
-    (let* ((minutes (string-to-int (substring timeval (match-beginning 1)
-					      (match-end 1))))
-	   (seconds (* minutes 60)))
+    (let* ((minutes (string-to-number (substring timeval (match-beginning 1)
+                                              (match-end 1))))
+           (seconds (* minutes 60)))
       (progn
 	(tea-timer-cancel)
 	(setq tea-active-timer (tea-timer seconds))
