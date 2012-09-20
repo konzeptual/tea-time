@@ -95,16 +95,16 @@ If you don't have alsa, it is better to be .wav file"
 Store current timer in a global variable."
   (interactive)
   (run-at-time sec nil (lambda (seconds)
-			 (tea-time-show-notification (format "Time is up! %d minutes" (/ seconds 60)))
-			 (tea-time-play-sound)
-			 ) sec))
+                         (tea-time-show-notification (format "Time is up! %d minutes" (/ seconds 60)))
+                         (tea-time-play-sound)
+                         ) sec))
 
 (defun tea-time-play-sound ()
   "Play sound"
   (if tea-time-sound
       (if tea-time-sound-command
-	  (start-process-shell-command "tea-ready" nil (format tea-time-sound-command tea-time-sound))
-	(play-sound-file tea-time-sound))
+          (start-process-shell-command "tea-ready" nil (format tea-time-sound-command tea-time-sound))
+        (play-sound-file tea-time-sound))
     (progn (beep t) (beep t)))
   )
 
@@ -114,10 +114,10 @@ Store current timer in a global variable."
   (if (not (tea-timer-is-active))
       (message "Timer is not yet started.")
     (let* (
-	   (remaining-time (decode-time (time-subtract (timer--time tea-active-timer) (current-time))))
-	   (remaining-seconds (nth 0 remaining-time))
-	   (remaining-minutes (nth 1 remaining-time))
-	   )
+           (remaining-time (decode-time (time-subtract (timer--time tea-active-timer) (current-time))))
+           (remaining-seconds (nth 0 remaining-time))
+           (remaining-minutes (nth 1 remaining-time))
+           )
       (message "%d min %d sec left" remaining-minutes remaining-seconds)
       )
     ))
@@ -127,9 +127,9 @@ Store current timer in a global variable."
   "Cancel currenly running tea-timer. If not running - do nothing."
   (if (tea-timer-is-active)
       (progn
-	(cancel-timer tea-active-timer)
-	(makunbound 'tea-active-timer)
-	)
+        (cancel-timer tea-active-timer)
+        (makunbound 'tea-active-timer)
+        )
     ))
 
 (defun tea-timer-is-active ()
@@ -147,9 +147,9 @@ Cancel prevoius timer, started by this function"
                                               (match-end 1))))
            (seconds (* minutes 60)))
       (progn
-	(tea-timer-cancel)
-	(setq tea-active-timer (tea-timer seconds))
-	)))
+        (tea-timer-cancel)
+        (setq tea-active-timer (tea-timer seconds))
+        )))
   )
 
 (defun tea-time-show-notification (notification)
