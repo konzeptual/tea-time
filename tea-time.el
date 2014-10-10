@@ -94,10 +94,7 @@ If you don't have alsa, it is better to be .wav file"
   "Ding and show notification when tea is ready.
 Store current timer in a global variable."
   (interactive)
-  (run-at-time sec nil (lambda (seconds)
-			 (tea-time-show-notification (format "Time is up! %d minutes" (/ seconds 60)))
-			 (tea-time-play-sound)
-			 ) sec))
+  (run-at-time sec nil tea-time-notify sec))
 
 (defun tea-time-play-sound ()
   "Play sound"
@@ -152,11 +149,18 @@ Cancel prevoius timer, started by this function"
 	)))
   )
 
-(defun tea-time-show-notification (notification)
-  "Show notification. Use mumbles."
-    (message notification)
-    (run-hooks 'tea-time-notification-hook)
-    )
+(defun tea-time-notify (seconds)
+  (let ((msg (format "Time is up! %d minutes" (/ seconds 60))))
+    (if (and window-system
+	     (require 'notifications nil 'noerror))
+	(notifications-notify :title "Tea Time"
+			      :body msg
+			      :urgency 'critical
+			      :sound-file tea-time-sound)
+      ;; If no notifications.el:
+      (message msg)
+      (tea-time-play-sound)))
+  (run-hooks 'tea-time-notification-hook))
 
 (provide 'tea-time)
 ;;; tea-time.el ends here
