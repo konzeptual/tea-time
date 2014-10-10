@@ -94,7 +94,7 @@ If you don't have alsa, it is better to be .wav file"
   "Ding and show notification when tea is ready.
 Store current timer in a global variable."
   (interactive)
-  (run-at-time sec nil tea-time-notify sec))
+  (run-at-time sec nil 'tea-time-notify sec))
 
 (defun tea-time-play-sound ()
   "Play sound"
