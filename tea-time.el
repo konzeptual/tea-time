@@ -29,9 +29,7 @@
 ;; It could be useful if you like make a tea or if you would like to
 ;; be more productive by setting time limit for a task.
 ;;
-;; If available, notification would be done with great tool
-;; mumbles ( http://www.mumbles-project.org )
-;; If not, then simply use standard emacs message.
+;; Standard emacs message is used for notification.
 
 ;;; Requirements:
 
@@ -153,7 +151,7 @@ Cancel prevoius timer, started by this function"
   )
 
 (defun tea-time-show-notification (notification)
-  "Show notification. Use mumbles."
+  "Show notification."
     (message notification)
     (run-hooks 'tea-time-notification-hook)
     )

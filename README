@@ -3,14 +3,12 @@
 Tea-time is an extention to emacs.
 Kind of analog of gnome applet tea-time http://det.cable.nu/teatime/index.rbx?r=2.8.0
 
-It allows you to set up time intervals and after this
-interval is elapsed, Emacs will notify you with sound and    notification.
-It could be useful if you make a tea or if you would like to
-be more productive by setting time limit for a task.
+It allows you to set up time intervals and after this interval is
+elapsed, Emacs will notify you with sound and notification. It could
+be useful if you make a tea or if you would like to be more productive
+by setting time limit for a task.
 
-If available, notification would be done with great tool
-mumbles ( http://www.mumbles-project.org )
-If not, then simply use standard emacs message.
+Standard emacs message is used for notification.
 
 = Requirements: =
 
@@ -36,7 +34,9 @@ or simply  put <code>(setq tea-time-sound "path-to-sound-file")</code> in .emacs
 * Interactively call (tea-time)
  
 	* Enter period in minutes if you want to start timer   
-	* Or press Enter without giving any number - if you would like to   know how much time is remaining before the timer expires
+
+	* Or press Enter without giving any number - if you would like to
+    know how much time is remaining before the timer expires
  
 * Use (tea-timer-cancel) to cancel currently running timer.
 
