@@ -137,20 +137,16 @@ Store current timer in a global variable."
   (and (boundp 'tea-active-timer) (< (float-time) (float-time (timer--time tea-active-timer))))
   )
 
-(defun tea-time (timeval)
+(defun tea-time ()
   "Ask how long the tea should draw and start a timer.
 Cancel prevoius timer, started by this function"
-  (interactive "sHow long (min)? ")
-  (if (not (string-match "\\`\\([0-9]+\\)\\'" timeval))
+  (interactive)
+  (if (tea-timer-is-active)
       (tea-show-remaining-time)
-    (let* ((minutes (string-to-int (substring timeval (match-beginning 1)
-					      (match-end 1))))
-	   (seconds (* minutes 60)))
-      (progn
-	(tea-timer-cancel)
-	(setq tea-active-timer (tea-timer seconds))
-	)))
-  )
+    (let* ((time (read-number "How long? "))
+           (minutes time)
+           (seconds (* minutes 60)))
+      (setq tea-active-timer (tea-timer seconds)))))
 
 (defun tea-time-show-notification (notification)
   "Show notification. Use mumbles."
